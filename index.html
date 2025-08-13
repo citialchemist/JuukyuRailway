@@ -18,6 +18,10 @@
       --brand-blue: #007AFF;
       --brand-gray: #1D1D1F;
     }
+    tailwind.config = {
+  darkMode: 'class',   // 强制 class 模式
+  theme: { extend: {} }
+}
     body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro JP", "Helvetica Neue", "Segoe UI", Roboto, sans-serif; }
     .btn-primary {
       background: linear-gradient(135deg, var(--brand-blue), #0051D5);
@@ -79,61 +83,69 @@
 </section>
 
 <!-- Services（六个功能） -->
-<section id="services" class="py-20 bg-gray-50 dark:bg-gray-900">
+<!-- 2. 把六个功能整块替换为以下内容 -->
+<section id="services" class="py-20 bg-white dark:bg-black">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-14">すべてのサポートが、ここに。</h2>
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-14 text-gray-900 dark:text-white">すべてのサポートが、ここに。</h2>
+
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- 1 -->
-      <a href="#routes" class="group block bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
+      <!-- 1 路线和车站 -->
+      <a href="#routes" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-blue-500 dark:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4"/></svg>
+          <svg class="w-7 h-7 text-blue-500 dark:text-blue-300"><!-- 同前 --></svg>
         </div>
-        <h3 class="text-xl font-semibold mb-2">路线和车站</h3>
-        <p class="text-sm opacity-60 group-hover:opacity-80">すべての路線図と駅情報を検索</p>
+        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">路线和车站</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">すべての路線図と駅情報を検索</p>
       </a>
-      <!-- 2 -->
-      <a href="#transfer" class="group block bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
+
+      <!-- 2 换乘指南 -->
+      <a href="#transfer" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-green-500 dark:text-green-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+          <svg class="w-7 h-7 text-green-500 dark:text-green-300"><!-- 同前 --></svg>
         </div>
-        <h3 class="text-xl font-semibold mb-2">换乘指南</h3>
-        <p class="text-sm opacity-60 group-hover:opacity-80">最適な乗り換えルートを瞬時に</p>
+        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">换乘指南</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">最適な乗り換えルートを瞬時に</p>
       </a>
-      <!-- 3 -->
-      <a href="#info" class="group block bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
+
+      <!-- 3 运营信息 -->
+      <a href="#info" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-yellow-500 dark:text-yellow-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <svg class="w-7 h-7 text-yellow-500 dark:text-yellow-300"><!-- 同前 --></svg>
         </div>
-        <h3 class="text-xl font-semibold mb-2">运营信息</h3>
-        <p class="text-sm opacity-60 group-hover:opacity-80">ダイヤ変更・運行情報をリアルタイムで</p>
+        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">运营信息</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">ダイヤ変更・運行情報をリアルタイムで</p>
       </a>
-      <!-- 4 -->
-      <a href="#lost" class="group block bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
+
+      <!-- 4 失物招领 -->
+      <a href="#lost" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-red-500 dark:text-red-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <svg class="w-7 h-7 text-red-500 dark:text-red-300"><!-- 同前 --></svg>
         </div>
-        <h3 class="text-xl font-semibold mb-2">失物招领</h3>
-        <p class="text-sm opacity-60 group-hover:opacity-80">忘れ物をオンラインで検索・申請</p>
+        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">失物招领</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">忘れ物をオンラインで検索・申請</p>
       </a>
-      <!-- 5 -->
-      <a href="#passenger" class="group block bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
+
+      <!-- 5 旅客服务 -->
+      <a href="#passenger" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-purple-500 dark:text-purple-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M12 11H4m16 0h-4M7 21v-4m0-8V5"/></svg>
+          <svg class="w-7 h-7 text-purple-500 dark:text-purple-300"><!-- 同前 --></svg>
         </div>
-        <h3 class="text-xl font-semibold mb-2">旅客服务</h3>
-        <p class="text-sm opacity-60 group-hover:opacity-80">Wi-Fi、レンタル、バリアフリー情報</p>
+        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">旅客服务</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Wi-Fi、レンタル、バリアフリー情報</p>
       </a>
-      <!-- 6 -->
-      <a href="#more" class="group block bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
+
+      <!-- 6 更多服务 -->
+      <a href="#more" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-gray-500 dark:text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          <svg class="w-7 h-7 text-gray-500 dark:text-gray-300"><!-- 同前 --></svg>
         </div>
-        <h3 class="text-xl font-semibold mb-2">更多服务</h3>
-        <p class="text-sm opacity-60 group-hover:opacity-80">キャンペーン・アプリダウンロード</p>
+        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">更多服务</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">キャンペーン・アプリダウンロード</p>
       </a>
     </div>
   </div>
 </section>
+
 
 <!-- Special Event -->
 <section id="event" class="py-24 px-6">
