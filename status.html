@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <title>運行状況 - Juukyu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Juukyu鉄道 渝急本線・茶園線 リアルタイム運行情報">
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <!-- SF Symbols CDN（仅作演示，生产请使用本地字体） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sf-symbols@1/sf-symbols.css">
+  <style>
+    :root{--brand-blue:#007AFF;--brand-gray:#1D1D1F;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro JP","Helvetica Neue",Roboto,sans-serif;}
+    .btn-primary{background:linear-gradient(135deg,var(--brand-blue),#0051D5);}
+    .btn-secondary{border:1px solid var(--brand-gray);color:var(--brand-gray);}
+    @media (prefers-color-scheme:dark){
+      .btn-secondary{border-color:#fff;color:#fff;}
+      .btn-secondary:hover{background:#fff;color:#000;}
+    }
+    /* 弹簧动画 */
+    .ease-spring{transition-timing-function:cubic-bezier(.34,1.56,.64,1);}
+  </style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-black dark:text-white">
+
+<!-- 导航栏（与主页完全一致） -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/70 dark:bg-black/70 backdrop-blur-xl">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="/" class="font-bold text-xl select-none">Juukyu</a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="/" class="px-3 py-1 rounded-full transition-transform duration-200 hover:scale-105">TOP</a>
+        <a href="#routes" class="px-3 py-1 rounded-full transition-transform duration-200 hover:scale-105">路線・時刻</a>
+        <a href="#services" class="px-3 py-1 rounded-full transition-transform duration-200 hover:scale-105">サービス</a>
+      </nav>
+
+      <!-- Mobile Hamburger -->
+      <button id="menuBtn" class="md:hidden w-8 h-8 flex items-center justify-center rounded-full focus:outline-none">
+        <svg class="w-5 h-5 transition-transform duration-300" id="menuIcon" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <nav id="mobileMenu" class="md:hidden overflow-hidden max-h-0 transition-[max-height] duration-500 ease-spring">
+      <div class="pb-4 flex flex-col space-y-2 text-center">
+        <a href="/" class="block py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">TOP</a>
+        <a href="#routes" class="block py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">路線・時刻</a>
+        <a href="#services" class="block py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">サービス</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- 主要内容 -->
+<main class="pt-24 pb-16 px-6 max-w-5xl mx-auto">
+  <h1 class="text-3xl md:text-4xl font-bold text-center mb-10">リアルタイム運行状況</h1>
+
+  <!-- 卡片容器 -->
+  <div class="grid md:grid-cols-2 gap-8">
+
+    <!-- 渝急本线 -->
+    <div class="bg-gray-50 dark:bg-gray-800 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center mb-4">
+        <div class="relative w-10 h-10">
+          <!-- 绿色圆环 -->
+          <div class="absolute inset-0 rounded-full border-4 border-green-500"></div>
+          <span class="sf sf-checkmark w-6 h-6 text-green-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></span>
+        </div>
+        <h2 class="ml-4 text-2xl font-semibold">渝急本线</h2>
+      </div>
+      <p class="text-green-600 dark:text-green-400 font-medium mb-2">平常運行</p>
+      <p class="text-sm opacity-70">現在、全線に遅れ・運休はありません。</p>
+      <button class="mt-4 btn-primary text-white rounded-full px-4 py-2 text-sm">詳細時刻表</button>
+    </div>
+
+    <!-- 茶园线 -->
+    <div class="bg-gray-50 dark:bg-gray-800 rounded-3xl p-6 md:p-8 shadow-sm">
+      <div class="flex items-center mb-4">
+        <div class="relative w-10 h-10">
+          <!-- 黄色圆环 -->
+          <div class="absolute inset-0 rounded-full border-4 border-yellow-500"></div>
+          <span class="sf sf-exclamationmark w-6 h-6 text-yellow-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></span>
+        </div>
+        <h2 class="ml-4 text-2xl font-semibold">茶园线</h2>
+      </div>
+      <p class="text-yellow-600 dark:text-yellow-400 font-medium mb-2">一部遅れ</p>
+      <p class="text-sm opacity-70">茶園駅～南山駅間で信号点検中、最大10分遅れが発生しています。</p>
+      <button class="mt-4 btn-primary text-white rounded-full px-4 py-2 text-sm">詳細時刻表</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- 页脚（与主页统一） -->
+<footer class="bg-gray-50 dark:bg-gray-900 py-16 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 text-sm">
+    <div>
+      <h3 class="font-bold mb-4">Juukyu Railway</h3>
+      <p class="opacity-60">重慶市江北区建新北路1号</p>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-2">路線</h4>
+      <ul class="space-y-1 opacity-60">
+        <li><a href="#">渝急本线</a></li>
+        <li><a href="#">茶园线</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-2">サポート</h4>
+      <ul class="space-y-1 opacity-60">
+        <li><a href="#">よくあるご質問</a></li>
+        <li><a href="#">お問い合わせ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-2">言語</h4>
+      <ul class="space-y-1 opacity-60">
+        <li>日本語</li>
+        <li><a href="#">English</a></li>
+        <li><a href="#">中文</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="mt-12 text-center text-xs opacity-40">
+    © 2025 Juukyu Railway Co., Ltd. All rights reserved.
+  </div>
+</footer>
+
+<!-- 导航栏交互（与主页共用） -->
+<script>
+const btn  = document.getElementById('menuBtn');
+const menu = document.getElementById('mobileMenu');
+const icon = document.querySelector('#menuIcon path');
+btn.addEventListener('click', () => {
+  const open = !menu.classList.contains('max-h-0');
+  menu.classList.toggle('max-h-0', open);
+  menu.classList.toggle('max-h-96', !open);
+  icon.setAttribute('d', open ? 'M4 6h16M4 12h16M4 18h16' : 'M6 18L18 6M6 6l12 12');
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('header')) {
+    menu.classList.add('max-h-0');
+    menu.classList.remove('max-h-96');
+    icon.setAttribute('d','M4 6h16M4 12h16M4 18h16');
+  }
+});
+</script>
+</body>
+</html>
