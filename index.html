@@ -2,142 +2,254 @@
 <html lang="ja" class="scroll-smooth">
 <head>
   <meta charset="utf-8">
-  <title>Kawanami Railway – 心の先へ</title>
+  <title>Juukyu – 次の瞬間へ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="神奈川発、Apple 体験をまとった次世代私鉄。Suica 1 秒チケット、カーボンニュートラル 2035。">
+  <meta name="description" content="Juukyu鉄道 – 渝急本线・茶园线を走る、Apple 体験の次世代私鉄。">
 
-  <!-- Tailwind CDN（本番请自建） -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
 
-  <!-- GSAP 滚动动画 -->
+  <!-- GSAP -->
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
   <style>
-    :root {
-      --brand-blue: #007AFF;
-      --brand-gray: #1D1D1F;
-    }
-    tailwind.config = {
-  darkMode: 'class',   // 强制 class 模式
-  theme: { extend: {} }
-}
-    body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro JP", "Helvetica Neue", "Segoe UI", Roboto, sans-serif; }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--brand-blue), #0051D5);
-      transition: transform .25s cubic-bezier(.34,1.56,.64,1);
-    }
-    .btn-primary:hover { transform: scale(1.06); }
-    .btn-secondary {
-      border: 1px solid var(--brand-gray);
-      color: var(--brand-gray);
-      transition: all .25s;
-    }
-    .btn-secondary:hover {
-      background: var(--brand-gray);
-      color: #fff;
-    }
-    .hero-video {
-      object-fit: cover;
-      width: 100%;
-      height: 100vh;
-    }
-    @media (prefers-color-scheme: dark) {
+    :root { --brand-blue:#007AFF; --brand-gray:#1D1D1F; }
+    body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro JP","Helvetica Neue","Segoe UI",Roboto,sans-serif; }
+    .btn-primary { background:linear-gradient(135deg,var(--brand-blue),#0051D5); transition:transform .25s cubic-bezier(.34,1.56,.64,1); }
+    .btn-primary:hover { transform:scale(1.06); }
+    .btn-secondary { border:1px solid var(--brand-gray); color:var(--brand-gray); transition:all .25s; }
+    .btn-secondary:hover { background:var(--brand-gray); color:#fff; }
+    @media (prefers-color-scheme:dark){
       .btn-secondary { border-color:#fff; color:#fff; }
       .btn-secondary:hover { background:#fff; color:#000; }
     }
+    .hero-video{object-fit:cover;width:100%;height:100vh;}
   </style>
 </head>
-
 <body class="bg-white text-gray-900 dark:bg-black dark:text-white">
 
-<!-- Nav -->
-<header class="fixed top-0 left-0 right-0 z-40 bg-white/70 dark:bg-black/70 backdrop-blur">
-  <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="#" class="font-bold text-xl">Kawanami</a>
-    <ul class="hidden md:flex space-x-8 text-sm font-medium">
-      <li><a href="#routes">路線・時刻</a></li>
-      <li><a href="#services">サービス</a></li>
-      <li><a href="#event">特別企画</a></li>
-      <li><a href="#coupon">クーポン</a></li>
-      <li><a href="#guide">乗車ガイド</a></li>
-    </ul>
-    <button class="md:hidden text-2xl">≡</button>
-  </nav>
+<!-- Navigation -->
+<!-- ================= 新导航栏 ================= -->
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-white/70 dark:bg-black/70 backdrop-blur-xl"
+>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="#" class="font-bold text-xl select-none">Juukyu</a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6 text-sm font-medium">
+        <a
+          href="#routes"
+          class="px-3 py-1 rounded-full transition-transform duration-200 hover:scale-105"
+          >路線・時刻</a
+        >
+        <a
+          href="#services"
+          class="px-3 py-1 rounded-full transition-transform duration-200 hover:scale-105"
+          >サービス</a
+        >
+        <a
+          href="#event"
+          class="px-3 py-1 rounded-full transition-transform duration-200 hover:scale-105"
+          >特別企画</a
+        >
+        <a
+          href="#coupon"
+          class="px-3 py-1 rounded-full transition-transform duration-200 hover:scale-105"
+          >クーポン</a
+        >
+        <a
+          href="#guide"
+          class="px-3 py-1 rounded-full transition-transform duration-200 hover:scale-105"
+          >乗車ガイド</a
+        >
+      </nav>
+
+      <!-- Mobile Hamburger -->
+      <button
+        id="menuBtn"
+        class="md:hidden w-8 h-8 flex items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+      >
+        <svg
+          class="w-5 h-5 transition-transform duration-300"
+          id="menuIcon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <nav
+      id="mobileMenu"
+      class="md:hidden overflow-hidden max-h-0 transition-[max-height] duration-500 ease-spring"
+    >
+      <div class="pb-4 flex flex-col space-y-2 text-center">
+        <a
+          href="#routes"
+          class="block py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+          >路線・時刻</a
+        >
+        <a
+          href="#services"
+          class="block py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+          >サービス</a
+        >
+        <a
+          href="#event"
+          class="block py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+          >特別企画</a
+        >
+        <a
+          href="#coupon"
+          class="block py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+          >クーポン</a
+        >
+        <a
+          href="#guide"
+          class="block py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+          >乗車ガイド</a
+        >
+      </div>
+    </nav>
+  </div>
 </header>
+
+<!-- ============ 动画 & 交互 JS ============ -->
+<script>
+const btn      = document.getElementById('menuBtn');
+const menu     = document.getElementById('mobileMenu');
+const icon     = document.getElementById('menuIcon');
+
+/* 切换 Drawer 高度 + 图标旋转 */
+btn.addEventListener('click', () => {
+  const isOpen = !menu.classList.contains('max-h-0');
+  menu.classList.toggle('max-h-0', isOpen);
+  menu.classList.toggle('max-h-96', !isOpen);   /* 96 ≈ 足够高度 */
+  icon.style.transform = isOpen ? '' : 'rotate(45deg)';
+});
+
+/* 点击外部关闭 */
+document.addEventListener('click', e => {
+  if (!e.target.closest('header')) {
+    menu.classList.add('max-h-0');
+    menu.classList.remove('max-h-96');
+    icon.style.transform = '';
+  }
+});
+</script>
+
+<!-- ============ 额外自定义弹簧缓动 ============ -->
+<style>
+  .ease-spring {
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+</style>
+
 
 <!-- Hero -->
 <section class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
   <video class="hero-video absolute top-0 left-0 -z-10" autoplay muted loop playsinline>
-    <source src="https://cdn.kawanami-railway.jp/hero-asahi.webm" type="video/webm">
-    <img src="https://images.unsplash.com/photo-1527631120902-378417754324?auto=format&fit=crop&w=1920&q=80" alt="Train">
+    <source src="https://cdn.juukyu-rail.jp/hero-yukyu.webm" type="video/webm">
+    <img src="https://images.unsplash.com/photo-1527631120902-378417754324?auto=format&fit=crop&w=1920&q=80" alt="Juukyu Train">
   </video>
   <div class="z-10 px-4">
-    <h1 class="text-4xl md:text-7xl font-extrabold leading-tight tracking-tight">目的地は、次の自分。</h1>
-    <p class="mt-4 text-lg md:text-2xl opacity-90">Where you go next defines who you become.</p>
+    <h1 class="text-4xl md:text-7xl font-extrabold leading-tight">次の瞬間へ、走り出す。</h1>
+    <p class="mt-4 text-lg md:text-2xl opacity-90">Juukyu Railway – 渝急本线・茶园线</p>
     <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
       <button class="btn-primary rounded-full px-8 py-3 text-base font-semibold">スケジュールを見る</button>
-      <button class="btn-secondary rounded-full px-8 py-3 text-base font-semibold backdrop-blur bg-white/10">Suica で 1 秒購入</button>
+      <button class="btn-secondary rounded-full px-8 py-3 text-base font-semibold backdrop-blur bg-white/10">Suicaで1秒購入</button>
     </div>
   </div>
 </section>
 
-<!-- Services（六个功能） -->
-<!-- 2. 把六个功能整块替换为以下内容 -->
+<!-- Routes -->
+<section id="routes" class="py-24 px-6 max-w-7xl mx-auto">
+  <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">路線を選ぶ、旅を選ぶ。</h2>
+  <div class="grid md:grid-cols-2 gap-8">
+    <!-- 渝急本线 -->
+    <div class="bg-gray-50 dark:bg-gray-900 rounded-3xl p-8">
+      <img class="rounded-2xl w-full h-48 object-cover" src="https://images.unsplash.com/photo-1540946426104-8c1e3d6b8e29?auto=format&fit=crop&w=800&q=60" alt="Yukyu Main Line">
+      <h3 class="mt-6 text-2xl font-semibold">渝急本线</h3>
+      <p class="mt-2 opacity-70">都市の喧騒を離れ、最短28分で湖畔へ。</p>
+      <button class="mt-4 text-brand-blue font-semibold">詳しく →</button>
+    </div>
+    <!-- 茶园线 -->
+    <div class="bg-gray-50 dark:bg-gray-900 rounded-3xl p-8">
+      <img class="rounded-2xl w-full h-48 object-cover" src="https://images.unsplash.com/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=800&q=60" alt="Chayuan Line">
+      <h3 class="mt-6 text-2xl font-semibold">茶园线</h3>
+      <p class="mt-2 opacity-70">新茶の香りとともに、山々を駆け抜ける。</p>
+      <button class="mt-4 text-brand-blue font-semibold">詳しく →</button>
+    </div>
+  </div>
+</section>
+
+<!-- Services (6 functions) -->
 <section id="services" class="py-20 bg-white dark:bg-black">
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-3xl md:text-4xl font-bold text-center mb-14 text-gray-900 dark:text-white">すべてのサポートが、ここに。</h2>
-
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- 1 路线和车站 -->
+      <!-- 路线和车站 -->
       <a href="#routes" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-blue-500 dark:text-blue-300"><!-- 同前 --></svg>
+          <svg class="w-7 h-7 text-blue-500 dark:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4"/></svg>
         </div>
         <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">路线和车站</h3>
         <p class="text-sm text-gray-600 dark:text-gray-400">すべての路線図と駅情報を検索</p>
       </a>
 
-      <!-- 2 换乘指南 -->
+      <!-- 换乘指南 -->
       <a href="#transfer" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-green-500 dark:text-green-300"><!-- 同前 --></svg>
+          <svg class="w-7 h-7 text-green-500 dark:text-green-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
         </div>
         <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">换乘指南</h3>
         <p class="text-sm text-gray-600 dark:text-gray-400">最適な乗り換えルートを瞬時に</p>
       </a>
 
-      <!-- 3 运营信息 -->
+      <!-- 运营信息 -->
       <a href="#info" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-yellow-500 dark:text-yellow-300"><!-- 同前 --></svg>
+          <svg class="w-7 h-7 text-yellow-500 dark:text-yellow-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">运营信息</h3>
         <p class="text-sm text-gray-600 dark:text-gray-400">ダイヤ変更・運行情報をリアルタイムで</p>
       </a>
 
-      <!-- 4 失物招领 -->
+      <!-- 失物招领 -->
       <a href="#lost" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-red-500 dark:text-red-300"><!-- 同前 --></svg>
+          <svg class="w-7 h-7 text-red-500 dark:text-red-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         </div>
         <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">失物招领</h3>
         <p class="text-sm text-gray-600 dark:text-gray-400">忘れ物をオンラインで検索・申請</p>
       </a>
 
-      <!-- 5 旅客服务 -->
+      <!-- 旅客服务 -->
       <a href="#passenger" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-purple-500 dark:text-purple-300"><!-- 同前 --></svg>
+          <svg class="w-7 h-7 text-purple-500 dark:text-purple-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M12 11H4m16 0h-4M7 21v-4m0-8V5"/></svg>
         </div>
         <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">旅客服务</h3>
         <p class="text-sm text-gray-600 dark:text-gray-400">Wi-Fi、レンタル、バリアフリー情報</p>
       </a>
 
-      <!-- 6 更多服务 -->
+      <!-- 更多服务 -->
       <a href="#more" class="block bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all">
         <div class="w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-gray-500 dark:text-gray-300"><!-- 同前 --></svg>
+          <svg class="w-7 h-7 text-gray-500 dark:text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
         </div>
         <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">更多服务</h3>
         <p class="text-sm text-gray-600 dark:text-gray-400">キャンペーン・アプリダウンロード</p>
@@ -146,17 +258,16 @@
   </div>
 </section>
 
-
 <!-- Special Event -->
 <section id="event" class="py-24 px-6">
   <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10">
     <div class="flex-1">
-      <h2 class="text-4xl md:text-5xl font-bold leading-tight">桜彩フェア 2025</h2>
-      <p class="mt-4 text-lg opacity-70">3/20-4/10 の期間限定、車内で鎌倉銘菓「桜もち」プレゼント。Suica連携で先着 5,000 名に特製トートバッグも。</p>
+      <h2 class="text-4xl md:text-5xl font-bold leading-tight">紅葉ライトアップ 2025</h2>
+      <p class="mt-4 text-lg opacity-70">11/15-12/5 の期間限定、茶园線全線をLEDで彩るナイトクルーズ。Suica連携で先着1,000名に限定ポストカードプレゼント。</p>
       <button class="mt-8 btn-primary rounded-full px-8 py-3 font-semibold">詳しく見る</button>
     </div>
     <div class="flex-1">
-      <img class="rounded-3xl shadow-2xl w-full" src="https://images.unsplash.com/photo-1529528744093-14f6ec4560b4?auto=format&fit=crop&w=800&q=60" alt="Cherry Blossom Fair">
+      <img class="rounded-3xl shadow-2xl w-full" src="https://images.unsplash.com/photo-1507097672537-2b0effc54687?auto=format&fit=crop&w=800&q=60" alt="Autumn Illumination">
     </div>
   </div>
 </section>
@@ -164,20 +275,20 @@
 <!-- Service Notice -->
 <section id="notice" class="bg-gray-50 dark:bg-gray-900 py-20">
   <div class="max-w-4xl mx-auto px-6">
-    <h2 class="text-3xl font-bold mb-6">サービス通知</h2>
+    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">サービス通知</h2>
     <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 space-y-4">
       <div class="flex items-start gap-4">
         <span class="w-3 h-3 rounded-full bg-red-500 mt-2 flex-shrink-0"></span>
         <div>
-          <p class="font-semibold">2025/8/15 あさひ線一部区間で点検工事</p>
-          <p class="text-sm opacity-70">終電が21:00まで繰り上がります。詳しくは「運行情報」より。</p>
+          <p class="font-semibold text-gray-900 dark:text-white">2025/9/10 渝急本线 夜间点检延长</p>
+          <p class="text-sm opacity-70">最終電車が23:00まで繰り上がります。</p>
         </div>
       </div>
       <div class="flex items-start gap-4">
-        <span class="w-3 h-3 rounded-full bg-green-500 mt-2 flex-shrink-0"></span>
+        <span class="w-3 h-3 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
         <div>
-          <p class="font-semibold">全線 Wi-Fi 6E 対応完了のお知らせ</p>
-          <p class="text-sm opacity-70">8/1より最大 2 Gbps の快適インターネットをご利用いただけます。</p>
+          <p class="font-semibold text-gray-900 dark:text-white">全車両 USB-C 急速充電対応完了</p>
+          <p class="text-sm opacity-70">各座席に45Wポートを新設しました。</p>
         </div>
       </div>
     </div>
@@ -187,13 +298,13 @@
 <!-- Coupon -->
 <section id="coupon" class="py-24 px-6">
   <div class="max-w-5xl mx-auto text-center">
-    <h2 class="text-4xl font-bold mb-4">限定クーポン</h2>
+    <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">限定クーポン</h2>
     <p class="opacity-70 mb-10">Suicaアプリ限定・今すぐ追加</p>
-    <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-10 text-white shadow-2xl">
-      <p class="text-5xl font-bold">20% OFF</p>
-      <p class="mt-2 text-xl">つばめロマンスカー プレミアムクラス</p>
-      <p class="mt-1 opacity-80">利用期限：2025/9/30 まで</p>
-      <button class="mt-6 bg-white text-blue-600 font-semibold rounded-full px-8 py-3">Apple Walletに追加</button>
+    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-3xl p-10 text-white shadow-2xl">
+      <p class="text-5xl font-bold">一日自由券</p>
+      <p class="mt-2 text-xl">渝急本线・茶园线 いずれでも1日乗り放題</p>
+      <p class="mt-1 opacity-80">利用期限：2025/12/31 まで</p>
+      <button class="mt-6 bg-white text-emerald-600 font-semibold rounded-full px-8 py-3">Apple Walletに追加</button>
     </div>
   </div>
 </section>
@@ -201,26 +312,26 @@
 <!-- Guide -->
 <section id="guide" class="bg-gray-50 dark:bg-gray-900 py-24 px-6">
   <div class="max-w-4xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-14">3 Step で乗車</h2>
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-14 text-gray-900 dark:text-white">3 Step で乗車</h2>
     <div class="space-y-12">
       <div class="flex flex-col md:flex-row items-center gap-8">
         <div class="w-20 h-20 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-3xl">1</div>
         <div>
-          <h3 class="text-2xl font-semibold">SuicaをApple Walletに追加</h3>
+          <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">SuicaをApple Walletに追加</h3>
           <p class="mt-2 opacity-70">iPhoneまたはApple Watchで「Suica」アプリを開き、1タップで追加。</p>
         </div>
       </div>
       <div class="flex flex-col md:flex-row items-center gap-8">
         <div class="w-20 h-20 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-3xl">2</div>
         <div>
-          <h3 class="text-2xl font-semibold">チケットを購入</h3>
+          <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">チケットを購入</h3>
           <p class="mt-2 opacity-70">路線・時刻を検索し、Suica残高で即座に決済。</p>
         </div>
       </div>
       <div class="flex flex-col md:flex-row items-center gap-8">
         <div class="w-20 h-20 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-3xl">3</div>
         <div>
-          <h3 class="text-2xl font-semibold">改札でタッチ</h3>
+          <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">改札でタッチ</h3>
           <p class="mt-2 opacity-70">iPhoneまたはApple Watchをかざすだけ。紙の切符は不要。</p>
         </div>
       </div>
@@ -232,15 +343,14 @@
 <footer class="bg-gray-50 dark:bg-gray-900 py-16 px-6">
   <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 text-sm">
     <div>
-      <h3 class="font-bold mb-4">Kawanami Railway</h3>
-      <p class="opacity-60">神奈川県鎌倉市小町1-1-1</p>
+      <h3 class="font-bold mb-4">Juukyu Railway</h3>
+      <p class="opacity-60">重慶市江北区建新北路1号</p>
     </div>
     <div>
       <h4 class="font-semibold mb-2">路線</h4>
       <ul class="space-y-1 opacity-60">
-        <li><a href="#">あさひ線</a></li>
-        <li><a href="#">せとうみ線</a></li>
-        <li><a href="#">つばめロマンスカー</a></li>
+        <li><a href="#">渝急本线</a></li>
+        <li><a href="#">茶园线</a></li>
       </ul>
     </div>
     <div>
@@ -248,7 +358,6 @@
       <ul class="space-y-1 opacity-60">
         <li><a href="#">よくあるご質問</a></li>
         <li><a href="#">お問い合わせ</a></li>
-        <li><a href="#">iMessage で相談</a></li>
       </ul>
     </div>
     <div>
@@ -261,18 +370,24 @@
     </div>
   </div>
   <div class="mt-12 text-center text-xs opacity-40">
-    © 2025 Kawanami Railway Co., Ltd. All rights reserved.
+    © 2025 Juukyu Railway Co., Ltd. All rights reserved.
   </div>
 </footer>
 
-<!-- GSAP 动画 -->
+<!-- JS: Mobile Nav Toggle -->
+<script>
+const btn = document.getElementById('menuBtn');
+const menu = document.getElementById('mobileMenu');
+btn.addEventListener('click', () => {
+  menu.classList.toggle('hidden');
+});
+</script>
+
+<!-- GSAP Scroll Animation -->
 <script>
 gsap.registerPlugin(ScrollTrigger);
-gsap.from("#services .group", {
-  y: 60,
-  opacity: 0,
-  duration: 1,
-  stagger: 0.1,
+gsap.from("#services > div > div", {
+  y: 60, opacity: 0, duration: .8, stagger: .1,
   scrollTrigger: { trigger: "#services", start: "top 80%" }
 });
 </script>
